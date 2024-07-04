@@ -5,7 +5,7 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
-List<Contact> conlist = [SELECT Id,LastName, Logo__c, Rank__c FROM Contact];
+List<Contact> conlist = [SELECT Id,LastName, Logo__c,Email, Rank__c FROM Contact];
 for(Contact con:conlist)
 {
     if(con.LastName == 'Raza')
