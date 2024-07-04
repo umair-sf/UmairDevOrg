@@ -1,0 +1,13 @@
+<template>
+    <Lightning-card title="Documents" icon-name="standard:orders">
+
+        <lightning-vertical-navigation if:true={documents} onselect={handleDocumentSelection} selected-item="">
+            <lightning-vertical-navigation-section>
+                <template for:each={documents} for:item="doc">
+                    <lightning-vertical-navigation-item-icon label={doc.Name} name={doc.id} key={doc.id} href={doc.Link} icon-name={doc.Icon} class={doc.ColorClass} ></lightning-vertical-navigation-item-icon>
+                </template>
+            </lightning-vertical-navigation-section>
+        </lightning-vertical-navigation>
+
+    </Lightning-card>
+</template>

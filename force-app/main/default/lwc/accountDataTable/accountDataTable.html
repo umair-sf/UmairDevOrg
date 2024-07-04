@@ -1,0 +1,90 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="large" variant="brand" if:true={isLoading}></lightning-spinner>
+    <lightning-card title="Accounts" icon-name="standard:account">
+        <lightning-button slot="actions" onclick={loadData} icon-name="utility:refresh" variant="outline"></lightning-button>
+        <!-- Tabs & Datatables -->
+        <lightning-tabset variant="scoped">
+            <lightning-tab label="Account" icon-name="standard:account" value='Account' onactive={handleTabChange}>
+                <div style="height: 500px; overflow:auto;">
+                    
+                    <lightning-datatable if:true={accounts} key-field="Id" data={accounts} columns={account_columns}
+                                        onrowaction={handleRowActions} onsave={handleSave} draft-values={draftValues}
+                                        onsort={handleSort} sorted-by={sortBy} sorted-direction={sortDirection}
+                                        class="slds-m-right_large">
+                    </lightning-datatable>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Contacts" icon-name="standard:contact" value='Contact' onactive={handleTabChange}>
+                <div style="height: 500px; overflow:auto;">
+                    <lightning-datatable if:true={contacts} key-field="Id" data={contacts} columns={contact_columns}
+                                        onrowaction={handleRowActions} onsave={handleSave} draft-values={draftValues}
+                                        onsort={handleSort} sorted-by={sortBy} sorted-direction={sortDirection}
+                                        class="slds-m-right_large">
+                    </lightning-datatable>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Flow" icon-name="standard:flow" value='Flow' onactive={handleTabChange}>
+                <lightning-flow flow-api-name='Account_Compact_Related_View'> </lightning-flow>
+            </lightning-tab>
+        </lightning-tabset>
+
+    </lightning-card>
+
+    <!-- View/Edit Modal -->
+    <template if:true={showModal}>
+        <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container contactRecordModel">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeContactModel}>
+                            <lightning-icon icon-name="utility:close" size="medium"> </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><span style="text-transform:capitalize">{actionName} {activeTab}</span></h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-map map-markers={mapMarkers}> </lightning-map>
+                        <lightning-record-edit-form object-api-name={activeTab} record-id={selectedRecordId} onsuccess={handleSuccess} onload={loadForm}>
+                            <div class="slds-m-around_medium">
+                                <lightning-messages> </lightning-messages>
+                                <lightning-input-field field-name={field1}></lightning-input-field>
+                                <lightning-input-field field-name={field2}></lightning-input-field>
+                                <lightning-input-field field-name={field3}></lightning-input-field>
+                                <lightning-input-field field-name={field4}></lightning-input-field>
+                                <lightning-input-field field-name={field5}></lightning-input-field>
+                                <lightning-button variant="brand" type="submit" label="Save" title="Save Record" if:true={showButton}></lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    
+                    </div>  
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+    <!-- Delete Modal -->
+    <template if:true={isDelete}>
+        <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container contactRecordModel">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeContactModel}>
+                            <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2>Delete Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p>Are you sure you want to delete this record?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="destructive" label="Delete" title="Delete Record" onclick={handleDelete}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+</template>

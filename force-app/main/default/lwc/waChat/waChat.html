@@ -1,0 +1,50 @@
+<template>
+    <lightning-card icon-name="standard:whatsapp" variant="base" title="WhatsApp">
+        <lightning-spinner alternative-text="Loading"  size="medium" variant="brand" lwc:if={isLoading}></lightning-spinner>
+        <section role="log" class="slds-chat chatArea slds-scrollable" style="height: 500px;">
+            <ul class="slds-chat-list">
+                <template for:each={messages} for:index="index" for:item="message" >
+                    <li if:false={message.Outgoing__c} key={message.Id} class="slds-chat-listitem slds-chat-listitem_inbound">
+                        <div class="slds-chat-message">
+                           <span aria-hidden="true" class="slds-avatar slds-avatar_circle slds-chat-avatar">
+                           <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Andy Martinez">N</abbr>
+                           </span>
+                           <div class="slds-chat-message__body">
+                              <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                <span>
+                                    <lightning-formatted-rich-text value={message.MessageContent__c} ></lightning-formatted-rich-text>
+                                </span>
+                              </div>
+                              <div class="slds-chat-message__meta" aria-label="said Andy Martinez at 5:29 PM">{message.Customer_Name__c} • {message.MessageSentTime__c}</div>
+                           </div>
+                        </div>
+                    </li>
+                    <li if:true={message.Outgoing__c} key={message.Id} class="slds-chat-listitem slds-chat-listitem_outbound">
+                        <div class="slds-chat-message">
+                           <div class="slds-chat-message__body">
+                              <div class="slds-chat-message__text slds-chat-message__text_outbound">
+                                 <span>
+                                    <lightning-formatted-rich-text value={message.MessageContent__c} ></lightning-formatted-rich-text>
+                                 </span>
+                              </div>
+                              <div class="slds-chat-message__meta" aria-label="said Amber Cann at 5:23 PM">{message.Agent_Name__c} • {message.MessageSentTime__c}</div>
+                           </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+         </section>
+         <div class="slds-var-p-around_small slds-grid">
+            <div class="slds-col slds-size_11-of-12">
+                <lightning-input class="slds-var-m-right_x-small" type="text" data-id="messageInput" label="Send Message"  variant="label-hidden" placeholder="Message" onchange={handleInputChange} onkeyup={handleMessageSubmit}>
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <lightning-button-icon data-id="sendMessageButton" icon-name="utility:send" alternative-text="Send" variant="brand" title="Send Message" onclick={handleMessageSubmit}></lightning-button-icon>
+            </div>
+        </div>
+        <div class=" slds-chat-bookend slds-chat-bookend_stop">
+            <p>Developed by <b><a href="https://ternedge.com">TernEdge.com</a></b></p>
+        </div>
+    </lightning-card>
+</template>

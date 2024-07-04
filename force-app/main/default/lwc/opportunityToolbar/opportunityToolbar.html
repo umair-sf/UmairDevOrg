@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <c-lease-termination record-id={recordId} is-edit-mode={showModal}></c-lease-termination>
+        <div slot="actions">
+            <lightning-button variant="outline" label="Renewal" title="Renewal"
+                          icon-name="utility:multi_select_checkbox" class="slds-p-right_xx-small"></lightning-button>
+                          
+            <lightning-button variant="destructive-text" label="Renewal Downsizing" title="Renewal Downsizing"
+                            icon-name="utility:pop_in" class="slds-p-right_xx-small"></lightning-button>
+                            
+            <lightning-button variant="outline" label="Expansion" title="Expansion"
+                            icon-name="utility:apps" class="slds-p-right_xx-small"></lightning-button>
+
+            <lightning-button variant="destructive-text" label="Downsizing" title="Downsizing"
+                            icon-name="utility:filter" class="slds-p-right_xx-small"></lightning-button>
+
+            <lightning-button variant="outline" label="Modification" title="Modification"
+                            icon-name="utility:prompt_edit" class="slds-p-right_xx-small"></lightning-button>
+                            
+            <lightning-button variant="outline" label="Swap Lease" title="Swap Lease"
+                            icon-name="utility:toggle" class="slds-p-right_xx-small"></lightning-button>
+
+            <lightning-button variant="outline" label="Assignment" title="Assignment"
+                            icon-name="utility:assignment" class="slds-p-right_xx-small"></lightning-button>
+
+            <lightning-button variant="destructive" label="Termination" title="Termination" onclick={terminationForm}
+                            icon-name="utility:power" class="slds-p-right_small"></lightning-button>
+        </div>        
+    </lightning-card>
+</template>

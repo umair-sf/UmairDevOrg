@@ -1,0 +1,31 @@
+<template>
+    <lightning-card>
+
+        <div class="slds-grid slds-wrap">
+            <!-- Contacts -->
+            <div class="slds-col slds-size_1-of-3">
+                <lightning-vertical-navigation if:true={contacts} onselect={hanldeContactSelect}>
+                    <lightning-vertical-navigation-section label="Related Contacts">
+                        <template for:each={contacts} for:item="con">
+                            <lightning-vertical-navigation-item label={con.Name} name={con.id} key={con.id} onclick={navigateToViewContacttPage}></lightning-vertical-navigation-item>
+                        </template>
+                    </lightning-vertical-navigation-section>
+                </lightning-vertical-navigation>
+            </div>
+            <!-- Cases -->
+            <div class="slds-col slds-size_1-of-3">
+                <lightning-vertical-navigation if:true={cases} onselect={hanldeCaseSelect}>
+                    <lightning-vertical-navigation-section label="Related Cases">
+                        <template for:each={cases} for:item="cs">
+                            <lightning-vertical-navigation-item label={cs.CaseNumber} name={cs.id} key={cs.id}></lightning-vertical-navigation-item>
+                        </template>
+                    </lightning-vertical-navigation-section>
+                </lightning-vertical-navigation>
+            </div>
+            <!-- File Upload -->
+            <div class="slds-col slds-size_1-of-3" if:true={selectedCaseId}>
+                <lightning-file-upload label="Upload File" name="fileUploader" accept={acceptedFormats} record-id={selectedCaseId} ></lightning-file-upload>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,89 @@
+<template>
+    <lightning-card>
+        <!-- <div slot="title" class="slds-grid slds-gutters_xx-small">
+            <div class="slds-col"> 
+                <lightning-icon icon-name="standard:contact" class="slds-m-top_xx-small" > </lightning-icon> 
+            </div>
+            <div class="slds-col ">
+                <lightning-record-view-form object-api-name="Contact" record-id={recordId} > Contact
+                    <lightning-output-field variant="label-hidden" field-name="Name"></lightning-output-field>
+                </lightning-record-view-form>
+            </div>
+            <div class="slds-col slds-align-bottom">
+                <lightning-button-icon icon-name="utility:hierarchy" size="x-small" alternative-text="hierarchy" title="hierarchy"></lightning-button-icon>
+            </div>
+        </div> -->
+        <lightning-layout slot="title" vertical-align="end">
+            <lightning-layout-item >
+                <lightning-icon icon-name="standard:contact"  > </lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+                <lightning-record-view-form object-api-name="Contact" record-id={recordId} > 
+                    <lightning-output-field variant="label-hidden" field-name="Name"></lightning-output-field>
+                </lightning-record-view-form>Contact
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-button-icon icon-name="utility:hierarchy" size="x-small" alternative-text="hierarchy" title="hierarchy"></lightning-button-icon>
+            </lightning-layout-item>
+        </lightning-layout>
+        
+        <lightning-record-view-form object-api-name="Contact" record-id={recordId} >
+            <div class="slds-grid slds-p-horizontal_medium">
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="Name"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="Email"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="Phone"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="AccountId"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="OwnerId"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-output-field field-name="Title"> </lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+
+                </div>
+            </div>
+        </lightning-record-view-form>
+        <lightning-button-group slot="actions">
+            <lightning-button label="New Case"></lightning-button>
+            <lightning-button label="New Contact"></lightning-button>
+            <lightning-button label="Submit For Approval"></lightning-button>
+            <lightning-button-menu alternative-text="Show menu" variant="border-filled" menu-alignment="right">
+                <lightning-menu-item label="Menu Item One" value="Edit"></lightning-menu-item>
+                <lightning-menu-item label="Menu Item Two" value="Delete"></lightning-menu-item>
+                <lightning-menu-item label="Menu Item Three" value="Clone"></lightning-menu-item>
+            </lightning-button-menu>
+        </lightning-button-group>
+    </lightning-card>
+
+    <lightning-card>
+        <lightning-record-edit-form object-api-name="Contact" record-id={recordId} >
+            
+            <lightning-accordion active-section-name="ContactInfo" allow-multiple-sections-open >
+                <lightning-accordion-section name="ContactInfo" label="Contact Information">
+                    <lightning-input-field field-name="LastName"> </lightning-input-field>
+                    <lightning-input-field field-name="Title"> </lightning-input-field>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="AddressInfo" label="Address Information">
+                    <lightning-input-field field-name="Email"> </lightning-input-field>
+                    <lightning-input-field field-name="Phone"> </lightning-input-field>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="AdditionalInfo" label="Additional Information">
+                    <lightning-input-field field-name="Role__c"> </lightning-input-field>
+                    <lightning-input-field field-name="Type__c"> </lightning-input-field>
+                </lightning-accordion-section>
+            </lightning-accordion>
+
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

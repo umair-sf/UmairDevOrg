@@ -1,0 +1,77 @@
+<template>
+    <c-tern-edge-loader if:true={isLoading} > </c-tern-edge-loader>
+    <lightning-card title="Review Opportunities" icon-name="standard:opportunity">
+        
+        <div slot="actions">
+            <lightning-button-icon-stateful icon-name="utility:filterList" selected={filterSelected} onclick={showFilterPanel} if:true={filteredOpps}
+                                            alternative-text="Filter" class="slds-m-horizontal_x-small"></lightning-button-icon-stateful>
+
+            <lightning-button icon-name="utility:refresh" variant="outline" label="" onclick={handleRefresh} value="Refresh Records"></lightning-button>
+        </div>
+
+        <div class="slds-p-around_medium slds-grid" >
+
+            <div class="slds-col slds-p-around_medium" style="overflow: hidden;">
+                <!-- Account Table -->
+                <div>
+                    <lightning-datatable if:true={showAccountTable} key-field="Id" data={accounts} columns={account_columns} hide-checkbox-column onrowaction={handleOpportunities}>
+                    </lightning-datatable>
+                </div>
+                <!-- Selected Account Table -->
+                <div>
+                    <lightning-datatable if:true={showOpportunityTable} key-field="Id" data={selectedAccount} columns={account_columns}
+                                            hide-checkbox-column onrowaction={handleSelectedAccountRowAction}>
+                    </lightning-datatable>
+                </div>
+                <!-- Selected Account Opportunity Table -->
+                <div>
+                    <lightning-datatable if:true={selectedAccountOpprtunity} key-field="Id" data={selectedAccountOpprtunity}
+                                         columns={account_opportunity_columns} hide-checkbox-column onrowaction={handleSelectedAccountOppRowAction}>
+                    </lightning-datatable>
+                </div>
+                <div>
+                    <!-- Selected Opportunity Table -->
+                    <lightning-datatable if:true={showOpportunityTable} key-field="Id" data={filteredOpps} columns={opportunity_columns}
+                                                  hide-checkbox-column onrowaction={handleOppLineItems}>
+                    </lightning-datatable>
+                </div>
+                <div>
+                    <!-- Products Table -->
+                    <lightning-datatable if:true={filteredProducts} key-field="PriceBookEntryId" data={filteredProducts} onsave={handleSave}
+                                         columns={oppLineItem_columns} draft-values={draftValues} hide-checkbox-column >
+                    </lightning-datatable>
+                </div>
+                <div>
+                    <div class="slds-clearfix">
+                        <lightning-button icon-name="utility:back" variant="outline" if:true={opportunities} label="Back" onclick={handleBackAction} value="Back to Previous Screen" class="slds-float_right slds-p-top_x-small"></lightning-button>
+                        <lightning-button icon-name="utility:save" variant="brand" if:true={draftValues} label="Save" onclick={handleSaveAction} value="Back to Previous Screen" class="slds-float_right slds-p-around_x-small"></lightning-button>
+                        <lightning-button icon-name="utility:close" variant="outline" if:true={draftValues} onclick={handleCancelAction} label="Cancel" value="Back to Previous Screen" class="slds-float_right slds-p-top_x-small"></lightning-button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Panel -->
+            <div if:true={filterSelected} class="slds-col slds-size_3-of-12 slds-box slds-p-around_medium">
+                <lightning-card title="Filters">
+                    <div class="slds-box slds-p-around_small" if:true={owners}>
+                        <lightning-checkbox-group if:true={owners} name="Checkbox Group" label="Owner List" options={owners}
+                                                  value={selectedOwners} onchange={handleSelection}></lightning-checkbox-group>
+                        
+                        <lightning-checkbox-group if:true={leadSources} name="Checkbox Group" label="Lead Source" options={leadSources}
+                                                  value={selectedLeadSources} onchange={handleLeadSourceSelection}></lightning-checkbox-group>
+
+                        <lightning-checkbox-group if:true={stageNames} name="Checkbox Group" label="Stage Name" options={stageNames}
+                                                  value={selectedStageNames} onchange={handleStageNameSelection}></lightning-checkbox-group>
+                    </div>
+                    <div class="slds-box slds-p-around_small" if:true={productCodes}>
+                        <lightning-checkbox-group if:true={productCodes} name="Checkbox Group" label="Product Codes" options={productCodes}
+                                                  value={selectedProductCode} onchange={handleProductCodeSelection}></lightning-checkbox-group>
+
+                        <lightning-checkbox-group if:true={productFamilies} name="Checkbox Group" label="Product Family" options={productFamilies}
+                                                  value={selectedProductFamilies} onchange={handleProductFamilySelection}></lightning-checkbox-group>
+                    </div>
+                </lightning-card>
+            </div>
+        </div>
+    </lightning-card>
+</template>

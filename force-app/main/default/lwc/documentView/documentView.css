@@ -1,0 +1,9 @@
+.required {
+    --slds-c-icon-color-foreground-default: rgb(232, 0, 12);
+}
+.optional {
+    --slds-c-icon-color-foreground-default: rgb(255, 213, 0);
+}
+.success {
+    --slds-c-icon-color-foreground-default: rgb(3, 175, 0);
+}

@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Account Info" if:true={account}>
+        <div class="slds-m-around_medium slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12">
+                <strong>Name: </strong>{account.fields.Name.value}
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <strong>OwnerId: </strong><a href={account.accountUrl}>{account.fields.Owner.value.fields.Name.value}</a>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <strong>Phone: </strong> {account.fields.Phone.value}
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <strong>Email: </strong>{account.fields.Email__c.value}
+            </div>
+        </div>    
+    </lightning-card>
+    <lightning-card title="Create Contact">
+        <lightning-record-edit-form object-api-name={contactAPI} onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+            <div class="slds-m-around_medium">
+                <!-- <template for:each={contacts} for:item="contact" if:true={contacts}>
+                    <h1 key={contact.Id}>Name</h1>
+                    <p key={contact.Id}>{contact.Name}</p>
+                    <h1 key={contact.Id}>Email</h1>
+                    <p key={contact.Id}>{contact.Email}</p>
+                    <h1 key={contact.Id}>Phone</h1>
+                    <p key={contact.Id}>{contact.Phone}</p>
+                </template> -->
+                <lightning-messages> </lightning-messages>
+                <lightning-input-field field-name={conName}></lightning-input-field>
+                <lightning-input-field field-name={conEmail}></lightning-input-field>
+                <!-- <lightning-input-field field-name={conAccId} value={recordId}></lightning-input-field> -->
+                <lightning-input-field field-name={conPhone}></lightning-input-field>
+                <lightning-button onclick={handleReset} label="Reset" class="slds-m-horizontal_xx-small" title="Reset Fields"></lightning-button>
+                <lightning-button variant="brand" type="submit" label="Save" title="Save Record"></lightning-button>
+                <template if:true={loaded}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+                <!-- <template if:true={isCreated}>
+                    <p class="slds-m-top_medium">Contact Created Successfully!</p>
+                </template> -->
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

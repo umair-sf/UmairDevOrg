@@ -1,0 +1,74 @@
+<template>
+    <!-- Contact Card -->
+    <lightning-card title="Related Contacts" icon-name="standard:contact">
+        <lightning-button label="New" slot="actions" onclick={contactEdit}></lightning-button>
+        <div class="slds-p-around_medium slds-grid slds-wrap">
+            <template for:each={contacts} for:item="con">
+                <div key={con.Id} class="slds-col slds-size_3-of-12 slds-m-bottom_medium">
+                    <div  class="slds-grid slds-wrap slds-box slds-m-horizontal_x-small" style="height:200px !important;">
+                        <div class="slds-col slds-size_11-of-12">
+                            <a href={con.contactUrl}>{con.Name}</a>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12">
+                            <lightning-button-menu alternative-text="Show menu" variant="border-filled" menu-alignment="right" icon-size="x-small">
+                                <lightning-menu-item label="Edit" value={con.id} onclick={contactEdit}></lightning-menu-item>
+                                <lightning-menu-item label="Delete" value={con.id} onclick={handleDeleteConfirm}></lightning-menu-item>
+                            </lightning-button-menu>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            Title: <p >{con.Title}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            Phone: <a href={con.phoneUrl}>{con.Phone}</a>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            Email: <a href={con.mailtoUrl}>{con.Email}</a>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" for:each={con.Roles} for:item="roles" key={con.Id}>
+                            <lightning-badge label={roles}></lightning-badge>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <a href={viewAllContacts} slot="footer">View All</a>
+    </lightning-card>
+    
+    <!-- Modal Code -->
+    <template if:true={isEditMode}>
+        <div class="contactModel" >
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container contactRecordModel">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeContactModel}>
+                            <lightning-icon icon-name="utility:close" size="medium"> </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Contact</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-record-edit-form object-api-name='Contact' record-id={contactId} onsubmit={handleSubmit} onsuccess={handleSuccess} onload={loadForm} >
+                            <div class="slds-m-around_medium">
+                                <lightning-messages> </lightning-messages>
+                                <lightning-file-upload
+                                    label="Upload Photo"
+                                    name="fileUploader"
+                                    accept={acceptedFormats}
+                                    record-id={contactId}
+                                ></lightning-file-upload>
+                                <lightning-input-field field-name='Name' disabled="true"></lightning-input-field>
+                                <lightning-input-field field-name='Email'></lightning-input-field>
+                                <lightning-input-field field-name='Phone'></lightning-input-field>
+                                <lightning-input-field field-name='Title'></lightning-input-field>
+                                <lightning-input-field field-name='Roles__c'></lightning-input-field>
+                                <lightning-button variant="brand" onclick={enableEdit} label="Edit" title="Edit Record" if:true={showButton}></lightning-button>
+                                <lightning-button variant="brand" type="submit" label="Save" title="Save Record" if:false={showButton}></lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>  
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>
